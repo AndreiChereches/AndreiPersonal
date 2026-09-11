@@ -17,7 +17,7 @@ export const person = {
 } as const;
 
 export const links = {
-  linkedin: "https://linkedin.com/in/andrei-chereches",
+  linkedin: "https://www.linkedin.com/in/andrei-chereches-061330230/",
   github: "https://github.com/AndreiChereches",
   eforah: "https://eforah.nl",
   estimator: "https://eforah.nl/tools/discovery-estimator",

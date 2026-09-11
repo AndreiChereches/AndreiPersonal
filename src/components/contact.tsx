@@ -4,7 +4,7 @@ import { Section, SectionHeading, SectionLead } from "@/components/section";
 import { EMAIL, contact, links } from "@/content/site";
 
 const CHANNELS = [
-  { label: "LinkedIn", value: "linkedin.com/in/andrei-chereches", href: links.linkedin },
+  { label: "LinkedIn", value: "linkedin.com/in/andrei-chereches-061330230", href: links.linkedin },
   { label: "GitHub", value: "github.com/AndreiChereches", href: links.github },
   { label: "Email", value: EMAIL, href: `mailto:${EMAIL}` },
 ];
@@ -31,7 +31,8 @@ export function Contact({ className }: { className?: string }) {
               >
                 <span className="min-w-0">
                   <span className="label block text-faint">{channel.label}</span>
-                  <span className="mt-2 block truncate text-[1.0625rem] text-ink transition-colors group-hover:text-accent">
+                  {/* Wraps rather than truncates — a half-shown URL reads as broken. */}
+                  <span className="mt-2 block text-[0.9375rem] break-words text-ink transition-colors group-hover:text-accent sm:text-[1.0625rem]">
                     {channel.value}
                   </span>
                 </span>
