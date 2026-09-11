@@ -1,0 +1,206 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ------------------------------------------------------------- tokens -- */
+
+:root {
+  color-scheme: light;
+
+  --paper: #fbfaf7;
+  --paper-sunk: #f4f1ea;
+  --surface: #fffefc;
+  --ink: #191713;
+  --muted: #5d574e;
+  --faint: #766f61;
+  --line: #e4dfd4;
+  --line-strong: #d3ccbd;
+  --accent: #b2492e;
+  --accent-ink: #fdfaf8;
+  --accent-wash: #f6ece7;
+
+  /* Inverted band used by the campus section. */
+  --band: #1b1915;
+  --band-ink: #f4f1ea;
+  --band-muted: #a79f92;
+  --band-line: #33302a;
+  --band-surface: #232019;
+  --band-accent: #e0805d;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper: #15140f;
+  --paper-sunk: #100f0b;
+  --surface: #1d1b15;
+  --ink: #f3f0e9;
+  --muted: #a8a094;
+  --faint: #8f8779;
+  --line: #2e2b24;
+  --line-strong: #403c33;
+  --accent: #e0805d;
+  --accent-ink: #1a1712;
+  --accent-wash: #2a211b;
+
+  --band: #100f0b;
+  --band-ink: #f3f0e9;
+  --band-muted: #a8a094;
+  --band-line: #2b2822;
+  --band-surface: #1b1914;
+  --band-accent: #e0805d;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-sunk: var(--paper-sunk);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-wash: var(--accent-wash);
+
+  --color-band: var(--band);
+  --color-band-ink: var(--band-ink);
+  --color-band-muted: var(--band-muted);
+  --color-band-line: var(--band-line);
+  --color-band-surface: var(--band-surface);
+  --color-band-accent: var(--band-accent);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  --font-serif: var(--font-newsreader), ui-serif, Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* --------------------------------------------------------------- base -- */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv05" 1, "ss01" 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Never let a long unbroken string blow out a narrow viewport. */
+  a,
+  li,
+  p,
+  h1,
+  h2,
+  h3 {
+    overflow-wrap: break-word;
+  }
+}
+
+/* ---------------------------------------------------------- utilities -- */
+
+@utility label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Hairline rules that run down the page edges, framing the content column. */
+@utility rule-column {
+  @media (min-width: 1024px) {
+    border-inline: 1px solid var(--line);
+  }
+}
+
+/* Animated underline that grows from the left on hover. */
+@utility link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 340ms cubic-bezier(0.2, 0.6, 0.2, 1);
+
+  &:hover,
+  &:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* ------------------------------------------------------------- motion -- */
+
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/*
+ * Scroll-linked reveal with zero JavaScript. Where `animation-timeline` is not
+ * supported the rule simply never applies and content renders plainly, so the
+ * page can never end up stuck in a hidden state.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /*
+     * An absolute range rather than a percentage one: a percentage of `entry`
+     * scales with the element, so tall blocks would stay half-faded long after
+     * they are on screen and readable.
+     */
+    .reveal {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0px entry 240px;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

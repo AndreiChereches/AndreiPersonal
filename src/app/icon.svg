@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Andrei Cherecheș">
+  <rect width="64" height="64" rx="14" fill="#b2492e"/>
+  <g fill="none" stroke="#fbfaf7" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20 46 L32 18 L44 46"/>
+    <path d="M24.5 37 H39.5"/>
+  </g>
+</svg>
